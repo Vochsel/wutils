@@ -15,7 +15,7 @@ wutils - web utils
 var el = wutils.dom.get("canvas");
 //returns HTML reference to first dom with id/class/name/tagname
 
-var els = wutils.dom.get("canvas");
+var els = wutils.dom.getAll("canvas");
 //returns array of all references to dom of id/class/name/tagname
 ```
 
