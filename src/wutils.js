@@ -8,22 +8,102 @@ var wutils = {
 			 	- single element / array of elements
 		*/
 		get: function(id) {
-			//Initialize e as undefined
-			var e = undefined;
+			//Initialize e as null
+			var e = null;
+
+			//Temporary storage
+			var tmp = [];
 
 			//Try all dom accessors
-			if(e == undefined)
+			if(e == null) {
 				e = document.getElementById(id);
-			if(e == undefined)
-				e = document.getElementById(id);
-			if(e == undefined)
-				e = document.getElementsByClassName(id);
-			if(e == undefined)
-				e = document.getElementsByName(id);
-			if(e == undefined)
-				e = document.getElementsByTagName(id);
+				if(e != null)
+					return e;
+			}
+			if(e == null) {
+				tmp = document.getElementsByClassName(id);
+				if(tmp.constructor === HTMLCollection && tmp.length > 0) {
+					e = tmp;
+					return e;
+				}
+			}
+			if(e == null) {
+				tmp = document.getElementsByName(id);
+				if(tmp.constructor === HTMLCollection && tmp.length > 0) {
+					e = tmp;
+					return e;
+				}
+			}
+			if(e == null) {
+				tmp = document.getElementsByTagName(id);
+				if(tmp.constructor === HTMLCollection && tmp.length > 0) {
+					e = tmp;
+					return e;
+				}
+			}
 
 			//Return e
+			return e;
+		},
+		/* ===== Get all element by ambiguous identifier ======
+			 - Author: Ben Skinner
+			 - Params: 
+			 	- id (identifier to search for)
+			 - Return: 
+			 	- Appended array of elements
+		*/
+		getAll: function(id) {
+			//Initialize e as array
+			var e = [];
+
+			//Initialize temporary holder
+			var tmp = null;
+
+			//Get single element by ID
+			tmp = document.getElementById(id);
+			if(tmp != null)
+				e.push(tmp);
+
+			//Get all elements by class name
+			tmp = document.getElementsByClassName(id);
+			//Check if not null and if is a HTMLCollection
+			if(tmp != null && tmp.constructor === HTMLCollection) {
+				//Loop through all HTML elements
+				for(var i = 0; i < tmp.length; ++i) {
+					//Store individual elements
+					var t = tmp[i];
+					//Store individual element
+					e.push(t);
+				}
+			}
+
+			//Get all elements by tag name
+			tmp = document.getElementsByTagName(id);
+			//Check if not null and if is a HTMLCollection
+			if(tmp != null && tmp.constructor === HTMLCollection) {
+				//Loop through all HTML elements
+				for(var i = 0; i < tmp.length; ++i) {
+					//Store individual elements
+					var t = tmp[i];
+					//Store individual element
+					e.push(t);
+				}
+			}
+
+			//Get all elements by name
+			tmp = document.getElementsByName(id);
+			//Check if not null and if is a HTMLCollection
+			if(tmp != null && tmp.constructor === HTMLCollection) {
+				//Loop through all HTML elements
+				for(var i = 0; i < tmp.length; ++i) {
+					//Store individual elements
+					var t = tmp[i];
+					//Store individual element
+					e.push(t);
+				}
+			}
+
+			//Return elements
 			return e;
 		}
 	},
@@ -35,7 +115,7 @@ var wutils = {
 			 	- callback (function to be run on file load success, contents passed as param)
 			 	- data (optional data pointer for extra information in callback)
 		*/
-		loadFile: function(path, callback, data) {
+		load: function(path, callback, data) {
 			//Contents of the file to be loaded
 			var contents = "";
 
@@ -66,7 +146,7 @@ var wutils = {
 			 	- callback (function to be run on all files loaded successfully, array of contents in same order as paths)
 				- data (optional data pointer for extra information in callback)
 		*/
-		loadFiles: function(paths, callback, data) {
+		loadMultiple: function(paths, callback, data) {
 			//Store number of files
 			var numFiles = paths.length;
 
@@ -80,7 +160,7 @@ var wutils = {
 			for(var i = 0; i < numFiles; ++i) {
 				var curPath = paths[i];
 				//var c = i;
-				this.loadFile(curPath, function(contents, d) {
+				this.load(curPath, function(contents, d) {
 					//Increment number of files loaded
 					filesLoaded++;
 

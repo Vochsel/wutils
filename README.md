@@ -8,6 +8,35 @@ wutils - web utils
 
 ### Features
 
+#### Dom Manipulation
+```javascript
+
+/* -- Retrieving DOM -- */
+var el = wutils.dom.get("canvas");
+//returns HTML reference to first dom with id/class/name/tagname
+
+var els = wutils.dom.get("canvas");
+//returns array of all references to dom of id/class/name/tagname
+```
+
+#### File IO
+```javascript
+
+/* -- Load External File -- */
+//Asynchronously loads single file and has callback after loaded
+var f = wutils.file.load("path/to/file.txt", function(contents, data) {
+	console.log(contents);	//Prints: File contents
+	console.log(data);		//Prints: "extraData"
+}, "extraData");
+
+/* -- Load External Files -- */
+//Asynchronously loads all files in array and has callback after all loaded
+var f = wutils.file.loadMultiple(["path/to/file1.txt", "path/to/file2.txt"], function(contents, data) {
+	console.log(contents);	//Prints: [file1, file2]
+	console.log(data);		//Prints: "extraData"
+}, "extraData");
+```
+
 #### String Manipulation
 ```javascript
 /* -- Combining Strings -- */
