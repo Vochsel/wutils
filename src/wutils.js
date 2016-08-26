@@ -179,6 +179,33 @@ var wutils = {
 			}
 		},
 	},
+	input: {
+		/* ======= Add keybind =======
+			 - Author: Ben Skinner
+			 - Params: 
+			 	- key 		(string of key)
+				- mods		(object with properties: ctrl | shift | alt)
+				- callback	(function to bind)
+			 - Detail: 
+				- Binds callback to key with modifiers
+		*/
+		keybind: function(key, mods, callback) {
+			document.addEventListener("keydown", function(e) {
+				var k = key.toUpperCase().charCodeAt(0);
+
+				function mget(prop) { return (mods[prop] !== undefined) ? true : false; }
+
+				if(k === e.keyCode) {
+
+					if(	e.ctrlKey 	===  mget("ctrl")  && 
+						e.shiftKey 	===  mget("shift") && 
+						e.altKey 	===  mget("alt") ){
+						callback(e);
+					}
+				}
+			})
+		}
+	},
 	string: {
 		/* ======= Combine strings with options =======
 			 - Author: Ben Skinner

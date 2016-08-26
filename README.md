@@ -37,6 +37,15 @@ var f = wutils.file.loadMultiple(["path/to/file1.txt", "path/to/file2.txt"], fun
 }, "extraData");
 ```
 
+#### Input Utils
+```javascript
+/* -- Binding keybinds -- */
+wutils.input.keybind('k', {shift: true, alt: true}, function(evt) {
+	console.log("Shift, alt, K just pressed")
+});
+//Modifier object footprint: {ctrl:false, shift: false, alt: false}
+```
+
 #### String Manipulation
 ```javascript
 /* -- Combining Strings -- */
