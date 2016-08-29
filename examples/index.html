@@ -8,10 +8,17 @@
 		<div id="ben">Ben</div>
 		<div class="ben">Ben</div>
 		<ben>Hey</ben>
+		<hr>
+		<input type="range" id="in"/>
+		<div id="out"></div>
 		<script type="text/javascript">
 			wutils.input.keybind("k", {ctrl: true}, function(e){
 				console.log('K pressed');
 			})
+
+			var x = wutils.data.create(10);
+			x.inlet("in");
+			x.outlet("out", wutils.data.preset.HTML);
 		</script>
 	</body>
 </html>
