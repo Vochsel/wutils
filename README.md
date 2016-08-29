@@ -8,6 +8,19 @@ wutils - web utils
 
 ### Features
 
+#### Data (Quick Data)
+```HTML
+<input id="in" type="range"/>
+<div id="out"></div>
+```
+
+```javascript
+//Creates dynamic variable with links to inlets and outlets
+var d = wutils.data.create(10);
+d.inlet("in", "input");
+d.outlet("out", wutils.data.preset.HTML);
+```
+
 #### Dom Manipulation
 ```javascript
 
