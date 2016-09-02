@@ -11,14 +11,23 @@
 		<hr>
 		<input type="range" id="in"/>
 		<div id="out"></div>
+		<textarea></textarea>
+		<svg width="400" height="120" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+			<rect x="10" y="10" width="100" height="100"/>
+			<rect x="110" y="10" width="100" height="100"/>
+		</svg>
 		<script type="text/javascript">
-			wutils.input.keybind("k", {ctrl: true}, function(e){
-				console.log('K pressed');
-			})
+			wutils.input.keybind("k", function(e){ console.log('Ctrl K pressed'); }, {ctrl: true})
+			wutils.input.keybind("k", function(e){ console.log('Alt K pressed'); }, {alt: true})
+			wutils.input.keybind("k", function(e){ console.log('Shift K pressed'); }, {shift: true})
+			wutils.input.keybind("k", function(e){ console.log('K pressed'); })
 
 			var x = wutils.data.create(10);
 			x.inlet("in");
-			x.outlet("out", wutils.data.preset.HTML);
+			x.inlet("textarea");
+			x.outlet(wutils.data.presets.HTML, wutils.dom.get("out"));
+			x.outlet(wutils.data.presets.Attribute, {dom:wutils.dom.get("rect"), attr:"width"});
+			x.outlet(wutils.data.presets.Attribute, {dom:wutils.dom.get("rect"), attr:"height"});
 		</script>
 	</body>
 </html>

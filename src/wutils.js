@@ -1,3 +1,4 @@
+/* -------------- Core Web Utils ------------- */
 var wutils = {
 	data: {
 		/* ======= Quick Data Object =======
@@ -43,11 +44,11 @@ var wutils = {
 				 - Return: 
 				 	- Quick Data Object
 			*/
-			var CreateOutlet = function(qd, dom, callback) {
+			var CreateOutlet = function(qd, callback, data_ref) {
 				//Build outlet variable with dom reference, and outlet callback
 				var out = {
-					dom:dom,
-					callback:callback
+					callback: callback,
+					data: data_ref
 				};
 				//Push output reference
 				qd.outlets.push(out);
@@ -68,12 +69,14 @@ var wutils = {
 					 	- Quick Data Object
 				*/
 				update: function(v) {
-					//Update internal value
-					this.value = v;
+					//Update internal value if argument
+					if(v !== undefined)
+						this.value = v;
 					
 					//Update all outlets
 					for(var i=0; i<this.outlets.length; i++) {
-						this.outlets[i].callback(this.value, this.outlets[i].dom);
+						//Pass through value and data reference
+						this.outlets[i].callback(this.value, this.outlets[i].data);
 					}
 
 					//Update all inlets
@@ -92,7 +95,7 @@ var wutils = {
 				*/
 				inlet: function(doms_str, evt) {
 					//Select necessary DOM elements
-					var doms = wutils.dom.get(doms_str);
+					var doms = wutils.dom.getAll(doms_str);
 
 					//Default setting of evt
 					if(evt === undefined)
@@ -113,24 +116,14 @@ var wutils = {
 					 - Author: Ben Skinner
 					 - Desc: adds outlet to array
 					 - Params: 
-					 	- doms_str (identification of dom)
-					 	- callback (function to call on value updated)
+						- callback (function to call on value updated)
+					 	- data_ref (external data reference to be passed through)
 					 - Return: 
 					 	- Quick Data Object
 				*/
-				outlet: function(doms_str, callback) {
-					//Select necessary DOM elements
-					var doms = wutils.dom.get(doms_str);
-
-					//If single DOM element
-					if(doms.constructor !== Array) {
-						CreateOutlet(this, doms, callback);
-					} else {
-						//Otherwise loop and add all DOM elements
-						for(var i = 0; i < doms.length; ++i) {
-							CreateOutlet(this, doms[i], callback);
-						}
-					}
+				outlet: function(callback, data_ref) {
+					//Create outlet
+					CreateOutlet(this, callback, data_ref);
 					return this;
 				}
 			}
@@ -141,14 +134,44 @@ var wutils = {
 			 	- HTML (Replaces innerHTML with value)
 			 	- Attribute (Sets attribute @attr with value)
 		*/
-		preset: {
-			HTML: function(value, dom) {
-				dom.innerHTML = value;
-			},
-			Attribute: function(attr) {
-				return function(value, dom) {
-					dom.setAttribute(attr, value);
+		presets: {
+			HTML: function(value, data_ref) {
+				//If single DOM element
+				if((data_ref.constructor !== HTMLCollection) && (data_ref.constructor !== Array)) {
+					data_ref.innerHTML = value;
+				} else {
+					//Otherwise loop and add all DOM elements
+					for(var i = 0; i < data_ref.length; ++i) {
+						data_ref[i].innerHTML = value;
+					}
 				}
+			},
+			TextArea: function(value, data_ref) {
+				//If single DOM element
+				if((data_ref.constructor !== HTMLCollection) && (data_ref.constructor !== Array)) {
+					data_ref.value = value;
+				} else {
+					//Otherwise loop and add all DOM elements
+					for(var i = 0; i < data_ref.length; ++i) {
+						data_ref[i].value = value;
+					}
+				}
+			},
+			Attribute: function(value, data_ref) {
+				if((data_ref.dom.constructor !== HTMLCollection) && (data_ref.dom.constructor !== Array)) {
+					if(data_ref.dom.setAttribute === undefined)
+						data_ref.dom[data_ref.attr] = value;
+					else
+						data_ref.dom.setAttribute(data_ref.attr, value);
+				} else {
+					for(var i = 0; i < data_ref.dom.length; ++i) {
+						if(data_ref.dom[i].setAttribute === undefined)
+							data_ref.dom[i].attr = value;
+						else
+							data_ref.dom[i].setAttribute(data_ref.attr, value);
+					}
+				}
+				
 			}
 		}
 	},
@@ -176,21 +199,28 @@ var wutils = {
 			if(e == null) {
 				tmp = document.getElementsByClassName(id);
 				if(tmp.constructor === HTMLCollection && tmp.length > 0) {
-					e = tmp;
+					e = (tmp.length > 1) ? tmp : tmp[0];
 					return e;
 				}
 			}
 			if(e == null) {
 				tmp = document.getElementsByName(id);
 				if(tmp.constructor === HTMLCollection && tmp.length > 0) {
-					e = tmp;
+					e = (tmp.length > 1) ? tmp : tmp[0];
 					return e;
 				}
 			}
 			if(e == null) {
 				tmp = document.getElementsByTagName(id);
 				if(tmp.constructor === HTMLCollection && tmp.length > 0) {
-					e = tmp;
+					e = (tmp.length > 1) ? tmp : tmp[0];
+					return e;
+				}
+			}
+			if(e == null) {
+				tmp = document.getElementsByTagNameNS(wutils.external.ns.svg, id);
+				if(tmp.constructor === HTMLCollection && tmp.length > 0) {
+					e = (tmp.length > 1) ? tmp : tmp[0];
 					return e;
 				}
 			}
@@ -256,8 +286,25 @@ var wutils = {
 				}
 			}
 
+			//Get all elements by NS: SVG
+			tmp = document.getElementsByTagNameNS(wutils.external.ns.svg, id);
+			//Check if not null and if is a HTMLCollection
+			if(tmp != null && tmp.constructor === HTMLCollection) {
+				//Loop through all HTML elements
+				for(var i = 0; i < tmp.length; ++i) {
+					//Store individual elements
+					var t = tmp[i];
+					//Store individual element
+					e.push(t);
+				}
+			}
 			//Return elements
 			return e;
+		}
+	},
+	external: {
+		ns: {
+			svg: "http://www.w3.org/2000/svg"
 		}
 	},
 	file: {
@@ -342,11 +389,11 @@ var wutils = {
 			 - Detail: 
 				- Binds callback to key with modifiers
 		*/
-		keybind: function(key, mods, callback) {
+		keybind: function(key, callback, mods) {
 			document.addEventListener("keydown", function(e) {
 				var k = key.toUpperCase().charCodeAt(0);
 
-				function mget(prop) { return (mods[prop] !== undefined) ? true : false; }
+				function mget(prop) { if(mods === null || mods === undefined) return false; return (mods[prop] !== undefined) ? true : false; }
 
 				if(k === e.keyCode) {
 
@@ -400,3 +447,17 @@ var wutils = {
 	}
 }
 
+/* -------- External Helper Functions -------- */
+
+/* ======= Is Value Valid =======
+	 - Author: Ben Skinner
+	 - Params: 
+	 	- val (value to check)
+	 - Return: 
+	 	- bool whether value is valid
+*/
+wutils.isValid = function(value) { return (value === undefined || value === null) ? false : true; };
+
+/* --------------- Wutils Info --------------- */
+wutils.version = "0.1.0";
+wutils.author = "Ben Skinner";

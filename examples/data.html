@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>wutils | data</title>
+		<script type="text/javascript" src="../src/wutils.js"></script>
+	</head>
+	<body>
+		<div id="header">#<input type="text" id="hashtag"/></div>
+		<div id="out"></div>
+		<div class="out"></div>
+		<textarea id="editor" style="width: 100%;">Hey there</textarea>
+
+		<script type="text/javascript">
+			//TODO: Outlet not just DOM
+			//TODO: Inlet support contenteditable
+
+			var qd = wutils.data;
+
+			var storage = localStorage;
+
+			function Note(tag) {
+				return {
+					content: "text",
+					tag: tag
+				}
+			}
+
+			var hashtag = qd.create("Test");
+			var editor = qd.create("hello");
+
+
+			var currentNote = qd.create(Note("notag"));
+			currentNote.outlet(function(val) {
+
+				var stored_tag = storage[val.tag];
+				if(stored_tag !== undefined) {
+					var stored_note = JSON.parse(stored_tag);
+					currentNote.value = stored_note;
+					editor.value = currentNote.value.content;
+				}
+				//hash
+				//editor.value = val.content;
+				console.log(val);
+				
+				//} else {
+				//	var stored_note = JSON.parse(stored_tag);
+				//	stored_note.content = val.content;
+				//	stored_tag = JSON.stringify(stored_note);
+				//}
+				//console.log(val);
+			});
+			/*var t = qd.create(10);
+			t.outlet(function(value) {
+				console.log("Outlet updated to: " + value);
+			});*/
+
+			//t.outlet(qd.preset.HTML, { dom : wutils.dom.get("out") });
+			
+			//t.outlet(wutils.data.preset.HTML("out"));
+
+			hashtag.inlet("hashtag");	//TODO: make inlet another qd object or html listener....
+			hashtag.outlet(function(val) { 
+				currentNote.value.tag = val;
+				currentNote.update();
+				editor.value = currentNote.value.content;
+			});
+			hashtag.outlet(qd.presets.HTML, wutils.dom.get("out"));
+
+			editor.inlet("editor");
+			editor.outlet(qd.presets.TEXTAREA, wutils.dom.get("editor"));
+			editor.outlet(function(val) {
+				currentNote.value.content = val;
+				currentNote.update();				//Shorten into one line??
+				storage[currentNote.value.tag] = JSON.stringify(currentNote.value);
+
+			});
+
+		</script>
+	</body>
+</html>
