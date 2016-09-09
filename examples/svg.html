@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>wutils | svg</title>
+		<script type="text/javascript" src="../src/wutils.js"></script>
+	</head>
+	<body>
+		
+		<h1>SVG Data</h1>
+		<h3><i>Created by Ben Skinner</i></h3>
+		<table>
+			<tr>
+				<td>Width: </td>
+				<td><input class="b_width" type="range"></td>
+				<td><input class="b_width" type="text"></td>
+			</tr>
+			<tr>
+				<td>Height: </td>
+				<td><input class="b_height" type="range"></td>
+				<td><input class="b_height" type="text"></td>
+			</tr>
+			<tr>
+				<td>Colour: </td>
+				<td><input class="b_colour" type="color"></td>
+				<td><input class="b_colour" type="text"></td>
+			</tr>
+		</table>
+
+		<svg width="480" height="480" viewBox="0 0 480 480" style="border: solid thin;" xmlns="http://www.w3.org/2000/svg">
+			<rect x="10" y="10" width="100" height="100" fill="yellow"/>
+			<rect x="10" y="110" width="100" height="100" fill="yellow"/>
+		</svg>
+
+		<script type="text/javascript">
+		//Data shortcut
+		var qd = wutils.data;
+
+		//Demo Box
+		var width = qd.create(100);
+		width.inlet("b_width");
+		width.outlet(qd.presets.Attribute, {dom:wutils.dom.get("rect"), attr:"width"});
+
+		var height = qd.create(100);
+		height.inlet("b_height");
+		height.outlet(qd.presets.Attribute, {dom:wutils.dom.get("rect"), attr:"height"});
+
+		var colour = qd.create("#550033");
+		colour.inlet("b_colour");
+		colour.outlet(qd.presets.Attribute, {dom:wutils.dom.get("rect"), attr:"fill"});
+		</script>
+	</body>
+</html>
