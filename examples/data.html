@@ -30,49 +30,38 @@
 
 
 			var currentNote = qd.create(Note("notag"));
-			currentNote.outlet(function(val) {
-
-				var stored_tag = storage[val.tag];
-				if(stored_tag !== undefined) {
-					var stored_note = JSON.parse(stored_tag);
-					currentNote.value = stored_note;
-					editor.value = currentNote.value.content;
-				}
-				//hash
-				//editor.value = val.content;
-				console.log(val);
-				
-				//} else {
-				//	var stored_note = JSON.parse(stored_tag);
-				//	stored_note.content = val.content;
-				//	stored_tag = JSON.stringify(stored_note);
-				//}
-				//console.log(val);
-			});
-			/*var t = qd.create(10);
-			t.outlet(function(value) {
-				console.log("Outlet updated to: " + value);
-			});*/
-
-			//t.outlet(qd.preset.HTML, { dom : wutils.dom.get("out") });
-			
-			//t.outlet(wutils.data.preset.HTML("out"));
 
 			hashtag.inlet("hashtag");	//TODO: make inlet another qd object or html listener....
-			hashtag.outlet(function(val) { 
-				currentNote.value.tag = val;
+			hashtag.outlet(function(val) {
+				// Store last tag
+				storage[currentNote.value.tag] = JSON.stringify(currentNote.value);
+
+				// Populate new tag
+				var stored_tag = storage[val];
+				if(stored_tag !== undefined) {
+					// Get existing
+					var stored_note = JSON.parse(stored_tag);
+					currentNote.value = stored_note;
+				} else {
+					// Create new
+					currentNote.value = Note(val, "default");
+				}
+
+				// Update
 				currentNote.update();
 				editor.value = currentNote.value.content;
+				editor.update();
 			});
+			
 			hashtag.outlet(qd.presets.HTML, wutils.dom.get("out"));
 
 			editor.inlet("editor");
-			editor.outlet(qd.presets.TEXTAREA, wutils.dom.get("editor"));
+			editor.outlet(qd.presets.TextArea, wutils.dom.get("editor"));
 			editor.outlet(function(val) {
 				currentNote.value.content = val;
 				currentNote.update();				//Shorten into one line??
 				storage[currentNote.value.tag] = JSON.stringify(currentNote.value);
-
+				//console.log(editor);
 			});
 
 		</script>
