@@ -1,6 +1,7 @@
 {
 	"name" : "wutils",
 	"version" : "1.1.0",
+	"license" : "MIT License",
 	"description" : "A collection of general purpose web utilities",
 	"dependencies" :
 	{

@@ -2,9 +2,9 @@
 var wutils = {
 
 	/* --------------- Wutils Info --------------- */
-	version: "0.1.0",
+	version: "1.1.0",
 	author: "Ben Skinner",
-	
+
 	/* ---------- External Namespaces ------------ */
 	external: {
 		ns: {
@@ -17,10 +17,9 @@ var wutils = {
 
 /* ======= Is Value Valid =======
 	 - Author: Ben Skinner
-	 - Params: 
+	 - Params:
 	 	- val (value to check)
-	 - Return: 
+	 - Return:
 	 	- bool whether value is valid
 */
 wutils.isValid = function(value) { return (value === undefined || value === null) ? false : true; };
-
