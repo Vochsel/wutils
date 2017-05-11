@@ -18,7 +18,8 @@ wutils - web utils
 //Creates dynamic variable with links to inlets and outlets
 var d = wutils.data.create(10);
 d.inlet("in", "input");
-d.outlet("out", wutils.data.preset.HTML);
+d.outlet(wutils.data.presets.HTML, wutils.dom.get("out"));
+d.outlet(wutils.data.presets.Attribute, {dom:wutils.dom.get("rect"), attr:"width"});
 ```
 
 #### Dom Manipulation

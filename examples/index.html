@@ -10,8 +10,12 @@
 		<ben>Hey</ben>
 		<hr>
 		<input type="range" id="in"/>
-		<div id="out"></div>
+		<div class="out"></div>
+		<div class="out"></div>
+		<div class="out"></div>
 		<textarea></textarea>
+		<p>Content editable</p>
+		<p id="ce" contenteditable="true">100</p>
 		<svg width="400" height="120" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
 			<rect x="10" y="10" width="100" height="100"/>
 			<rect x="110" y="10" width="100" height="100"/>
@@ -24,6 +28,7 @@
 
 			var x = wutils.data.create(10);
 			x.inlet("in");
+			x.inlet("ce");
 			x.inlet("textarea");
 			x.outlet(wutils.data.presets.HTML, wutils.dom.get("out"));
 			x.outlet(wutils.data.presets.Attribute, {dom:wutils.dom.get("rect"), attr:"width"});
