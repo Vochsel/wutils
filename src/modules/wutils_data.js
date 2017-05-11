@@ -30,16 +30,9 @@ wutils.data.create = function(val) {
 			var val = (e.target.isContentEditable) ? e.target.innerHTML : e.target.value;
 
 			t.update(val);
-			//t.update(e.target.value);
-			console.log(e.target.isContentEditable);
 		});
 		//Push input reference into array of inputs
 		qd.inlets.push(dom);
-
-		if(dom.isContentEditable) {
-			console.log("making inlet's outlet")
-			CreateOutlet(qd, wutils.data.presets.HTML, dom);
-		}
 
 		//Update data value
 		qd.update(qd.value);
@@ -96,7 +89,11 @@ wutils.data.create = function(val) {
 
 			//Update all inlets
 			for(var i=0; i<this.inlets.length; i++) {
-				this.inlets[i].value = this.getValue();
+				if(this.inlets[i].isContentEditable && this.inlets[i] !== document.activeElement) {
+					this.inlets[i].innerHTML = this.getValue();
+				} else {
+					this.inlets[i].value = this.getValue();
+				}
 			}
 		},
 		/* ======= Adds inlet =======
