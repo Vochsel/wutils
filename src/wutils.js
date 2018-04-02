@@ -2,7 +2,7 @@
 var wutils = {
 
 	/* --------------- Wutils Info --------------- */
-	version: "1.1.0",
+	version: "1.2.1",
 	author: "Ben Skinner",
 
 	/* ---------- External Namespaces ------------ */
@@ -23,3 +23,5 @@ var wutils = {
 	 	- bool whether value is valid
 */
 wutils.isValid = function(value) { return (value === undefined || value === null) ? false : true; };
+
+module.exports = wutils;

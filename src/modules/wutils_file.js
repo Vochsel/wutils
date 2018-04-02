@@ -1,7 +1,7 @@
 
 /* ----------------- File Utils -------------- */
 
-wutils.file = {};
+module.exports.file = {};
 
 /* ======= Load file at path asynchronously =======
 	 - Author: Ben Skinner
@@ -10,7 +10,7 @@ wutils.file = {};
 	 	- callback (function to be run on file load success, contents passed as param)
 	 	- data (optional data pointer for extra information in callback)
 */
-wutils.file.load = function(path, callback, data) {
+module.exports.file.load = function(path, callback, data) {
 	//Contents of the file to be loaded
 	var contents = "";
 
@@ -42,7 +42,7 @@ wutils.file.load = function(path, callback, data) {
 	 	- callback (function to be run on all files loaded successfully, array of contents in same order as paths)
 		- data (optional data pointer for extra information in callback)
 */
-wutils.file.loadMultiple = function(paths, callback, data) {
+module.exports.file.loadMultiple = function(paths, callback, data) {
 	//Store number of files
 	var numFiles = paths.length;
 

@@ -1,7 +1,7 @@
 
 /* ----------------- DOM Utils --------------- */
 
-wutils.dom = {};
+module.exports.dom = {};
 
 /* ======= Get element by ambiguous identifier =======
 	 - Author: Ben Skinner
@@ -10,7 +10,7 @@ wutils.dom = {};
 	 - Return: 
 	 	- single element / array of elements
 */
-wutils.dom.get = function(id) {
+module.exports.dom.get = function(id) {
 	//Initialize e as null
 	var e = null;
 
@@ -45,7 +45,7 @@ wutils.dom.get = function(id) {
 		}
 	}
 	if(e == null) {
-		tmp = document.getElementsByTagNameNS(wutils.external.ns.svg, id);
+		tmp = document.getElementsByTagNameNS(module.exports.external.ns.svg, id);
 		if(tmp.constructor === HTMLCollection && tmp.length > 0) {
 			e = (tmp.length > 1) ? tmp : tmp[0];
 			return e;
@@ -63,7 +63,7 @@ wutils.dom.get = function(id) {
 	 - Return: 
 	 	- Appended array of elements
 */
-wutils.dom.getAll = function(id) {
+module.exports.dom.getAll = function(id) {
 	//Initialize e as array
 	var e = [];
 
@@ -115,7 +115,7 @@ wutils.dom.getAll = function(id) {
 	}
 
 	//Get all elements by NS: SVG
-	tmp = document.getElementsByTagNameNS(wutils.external.ns.svg, id);
+	tmp = document.getElementsByTagNameNS(module.exports.external.ns.svg, id);
 	//Check if not null and if is a HTMLCollection
 	if(tmp != null && tmp.constructor === HTMLCollection) {
 		//Loop through all HTML elements

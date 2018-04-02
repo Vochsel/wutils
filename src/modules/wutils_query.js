@@ -1,7 +1,7 @@
 
 /* ---------------- Query Utils -------------- */
 
-wutils.query = {};
+module.exports.query = {};
 
 /* ======== Query URL ========
 	 - Author: Ben Skinner
@@ -10,7 +10,7 @@ wutils.query = {};
 	 - Detail: 
 		- Returns associated array of found paramaters
 */
-wutils.query.url = function(qs) {
+module.exports.query.url = function(qs) {
 	//If no paramater get current documents paramaters
 	if(!qs)
 		qs = document.location.search;

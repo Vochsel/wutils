@@ -1,7 +1,7 @@
 
 /* ---------------- Input Utils -------------- */
 
-wutils.input = {};
+module.exports.input = {};
 	
 /* ======= Add keybind =======
 	 - Author: Ben Skinner
@@ -12,7 +12,7 @@ wutils.input = {};
 	 - Detail: 
 		- Binds callback to key with modifiers
 */
-wutils.input.keybind = function(key, callback, mods) {
+module.exports.input.keybind = function(key, callback, mods) {
 	document.addEventListener("keydown", function(e) {
 		var k = key.toUpperCase().charCodeAt(0);
 

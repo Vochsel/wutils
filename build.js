@@ -3,7 +3,7 @@ var compressor = require('node-minify');
 //Concatenate
 compressor.minify({
   compressor: 'no-compress',
-  input: ["./src/wutils.js", "./src/modules/*.js"],
+  input: ["./index.js", "./src/modules/*.js"],
   output: './lib/wutils.js',
   callback: function (err, min) {}
 });

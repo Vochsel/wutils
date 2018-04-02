@@ -1,7 +1,7 @@
 
 /* ----------------- Data Utils -------------- */
 
-wutils.data = {};
+module.exports.data = {};
 
 /* ======= Quick Data Object =======
 	 - Author: Ben Skinner
@@ -10,7 +10,7 @@ wutils.data = {};
 	 - Return:
 	 	- Quick Data Object
 */
-wutils.data.create = function(val) {
+module.exports.data.create = function(val) {
 	/* ======= Creates Inlet =======
 		 - Author: Ben Skinner
 		 - Desc: Adds event listener to @evt to change value of data
@@ -113,7 +113,7 @@ wutils.data.create = function(val) {
 		*/
 		inlet: function(doms_str, evt) {
 			//Select necessary DOM elements
-			var doms = wutils.dom.getAll(doms_str);
+			var doms = module.exports.dom.getAll(doms_str);
 
 			//Default setting of evt
 			if(evt === undefined)
@@ -153,7 +153,7 @@ wutils.data.create = function(val) {
 	 	- HTML (Replaces innerHTML with value)
 	 	- Attribute (Sets attribute @attr with value)
 */
-wutils.data.presets = {
+module.exports.data.presets = {
 	HTML: function(value, data_ref) {
 		//If single DOM element
 		if((data_ref.constructor !== HTMLCollection) && (data_ref.constructor !== Array)) {

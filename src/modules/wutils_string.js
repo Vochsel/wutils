@@ -1,7 +1,7 @@
 
 /* ------------- Conversion String ----------- */
 
-wutils.string = {};
+module.exports.string = {};
 
 /* ======= Combine strings with options =======
 	 - Author: Ben Skinner
@@ -11,7 +11,7 @@ wutils.string = {};
 	 - Detail: 
 	 	- Infixes are applied to middle combinations
 */
-wutils.string.combine = function(strings, affixes) {
+module.exports.string.combine = function(strings, affixes) {
 	//Create final string storage
 	var combinedString = "";
 
