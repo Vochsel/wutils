@@ -7,14 +7,15 @@ var out_input = {};
 	 - Author: Ben Skinner
 	 - Params: 
 	 	- key 		(string of key)
-		- mods		(object with properties: ctrl | shift | alt)
 		- callback	(function to bind)
+		- mods		(object with properties: ctrl | shift | alt)
 	 - Detail: 
 		- Binds callback to key with modifiers
 */
 out_input.keybind = function(key, callback, mods) {
 	document.addEventListener("keydown", function(e) {
-		var k = key.toUpperCase().charCodeAt(0);
+		var k = key.toUpperCase();
+		var l = e.key.toUpperCase();
 
 		function mget(prop) { if(mods === null || mods === undefined) return false; return (mods[prop] !== undefined) ? true : false; }
 
