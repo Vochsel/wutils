@@ -1,7 +1,7 @@
 
 /* ----------------- File Utils -------------- */
 
-module.exports.file = {};
+var out_file = {};
 
 /* ======= Load file at path asynchronously =======
 	 - Author: Ben Skinner
@@ -10,7 +10,7 @@ module.exports.file = {};
 	 	- callback (function to be run on file load success, contents passed as param)
 	 	- data (optional data pointer for extra information in callback)
 */
-module.exports.file.load = function(path, callback, data) {
+out_file.load = function(path, callback, data) {
 	//Contents of the file to be loaded
 	var contents = "";
 
@@ -42,7 +42,7 @@ module.exports.file.load = function(path, callback, data) {
 	 	- callback (function to be run on all files loaded successfully, array of contents in same order as paths)
 		- data (optional data pointer for extra information in callback)
 */
-module.exports.file.loadMultiple = function(paths, callback, data) {
+out_file.loadMultiple = function(paths, callback, data) {
 	//Store number of files
 	var numFiles = paths.length;
 
@@ -74,3 +74,5 @@ module.exports.file.loadMultiple = function(paths, callback, data) {
 		}, {iteration: i});
 	}
 };
+
+module.exports = out_file;

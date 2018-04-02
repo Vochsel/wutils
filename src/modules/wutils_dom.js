@@ -1,7 +1,7 @@
 
 /* ----------------- DOM Utils --------------- */
 
-module.exports.dom = {};
+var out_dom = {};
 
 /* ======= Get element by ambiguous identifier =======
 	 - Author: Ben Skinner
@@ -10,7 +10,7 @@ module.exports.dom = {};
 	 - Return: 
 	 	- single element / array of elements
 */
-module.exports.dom.get = function(id) {
+out_dom.get = function(id) {
 	//Initialize e as null
 	var e = null;
 
@@ -63,7 +63,7 @@ module.exports.dom.get = function(id) {
 	 - Return: 
 	 	- Appended array of elements
 */
-module.exports.dom.getAll = function(id) {
+out_dom.getAll = function(id) {
 	//Initialize e as array
 	var e = [];
 
@@ -129,3 +129,5 @@ module.exports.dom.getAll = function(id) {
 	//Return elements
 	return e;
 }
+
+module.exports = out_dom;

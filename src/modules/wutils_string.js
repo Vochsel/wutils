@@ -1,7 +1,7 @@
 
 /* ------------- Conversion String ----------- */
 
-module.exports.string = {};
+var out_string = {};
 
 /* ======= Combine strings with options =======
 	 - Author: Ben Skinner
@@ -11,7 +11,7 @@ module.exports.string = {};
 	 - Detail: 
 	 	- Infixes are applied to middle combinations
 */
-module.exports.string.combine = function(strings, affixes) {
+out_string.combine = function(strings, affixes) {
 	//Create final string storage
 	var combinedString = "";
 
@@ -40,3 +40,5 @@ module.exports.string.combine = function(strings, affixes) {
 	//Return combined string
 	return combinedString;
 }
+
+module.exports = out_string;

@@ -1,9 +1,9 @@
 
 /* ------------- Conversion Utils ------------ */
 
-module.exports.conversion = {};
+var out_conversion = {};
 
-module.exports.conversion.hexToRGB = function(hex) {
+out_conversion.hexToRGB = function(hex) {
 	var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
 	return result ? {
 	    r: parseInt(result[1], 16),
@@ -12,9 +12,9 @@ module.exports.conversion.hexToRGB = function(hex) {
 	} : null;
 }
 
-module.exports.conversion.hexToVec = function(hex) {
-	var rgb = module.exports.conversion.hexToRGB(hex);
+out_conversion.hexToVec = function(hex) {
+	var rgb = out_conversion.hexToRGB(hex);
 	return [rgb.r / 255.0, rgb.g / 255.0, rgb.b / 255.0];
 }
-		
-	
+
+module.exports = out_conversion;

@@ -1,7 +1,7 @@
 
 /* ---------------- Input Utils -------------- */
 
-module.exports.input = {};
+var out_input = {};
 	
 /* ======= Add keybind =======
 	 - Author: Ben Skinner
@@ -12,7 +12,7 @@ module.exports.input = {};
 	 - Detail: 
 		- Binds callback to key with modifiers
 */
-module.exports.input.keybind = function(key, callback, mods) {
+out_input.keybind = function(key, callback, mods) {
 	document.addEventListener("keydown", function(e) {
 		var k = key.toUpperCase().charCodeAt(0);
 
@@ -28,3 +28,5 @@ module.exports.input.keybind = function(key, callback, mods) {
 		}
 	});
 }
+
+module.exports = out_input;

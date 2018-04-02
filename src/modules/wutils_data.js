@@ -1,7 +1,7 @@
 
 /* ----------------- Data Utils -------------- */
 
-module.exports.data = {};
+var out_data= {};
 
 /* ======= Quick Data Object =======
 	 - Author: Ben Skinner
@@ -10,7 +10,7 @@ module.exports.data = {};
 	 - Return:
 	 	- Quick Data Object
 */
-module.exports.data.create = function(val) {
+out_data.create = function(val) {
 	/* ======= Creates Inlet =======
 		 - Author: Ben Skinner
 		 - Desc: Adds event listener to @evt to change value of data
@@ -153,7 +153,7 @@ module.exports.data.create = function(val) {
 	 	- HTML (Replaces innerHTML with value)
 	 	- Attribute (Sets attribute @attr with value)
 */
-module.exports.data.presets = {
+out_data.presets = {
 	HTML: function(value, data_ref) {
 		//If single DOM element
 		if((data_ref.constructor !== HTMLCollection) && (data_ref.constructor !== Array)) {
@@ -195,3 +195,5 @@ module.exports.data.presets = {
 
 	}
 }
+
+module.exports = out_data; 

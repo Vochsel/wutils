@@ -1,7 +1,7 @@
 
 /* ---------------- Query Utils -------------- */
 
-module.exports.query = {};
+var out_query = {};
 
 /* ======== Query URL ========
 	 - Author: Ben Skinner
@@ -10,7 +10,7 @@ module.exports.query = {};
 	 - Detail: 
 		- Returns associated array of found paramaters
 */
-module.exports.query.url = function(qs) {
+out_query.url = function(qs) {
 	//If no paramater get current documents paramaters
 	if(!qs)
 		qs = document.location.search;
@@ -31,3 +31,5 @@ module.exports.query.url = function(qs) {
   	//Return associated array
   	return params;
 };
+
+module.exports = out_query;
