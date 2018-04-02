@@ -1,9 +1,9 @@
 {
 	"name" : "wutils",
-	"version" : "1.1.0",
+	"version" : "1.2.0",
 	"license" : "MIT License",
 	"description" : "A collection of general purpose web utilities",
-	"dependencies" :
+	"dev-dependencies" :
 	{
 		"node-minify" : "2.0.2"
 	}
