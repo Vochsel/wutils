@@ -19,7 +19,7 @@ out_input.keybind = function(key, callback, mods) {
 
 		function mget(prop) { if(mods === null || mods === undefined) return false; return (mods[prop] !== undefined) ? true : false; }
 
-		if(k === e.keyCode) {
+		if(k === l) {
 
 			if(	e.ctrlKey 	===  mget("ctrl")  && 
 				e.shiftKey 	===  mget("shift") && 
